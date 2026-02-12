@@ -1,0 +1,459 @@
+/* Global styles and reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Microsoft YaHei", "SimHei", Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    overflow: hidden;
+    touch-action: manipulation;
+}
+
+/* Main container - responsive height */
+#gameContainer {
+    width: 100%;
+    height: 450px;
+    display: flex;
+    background: white;
+    position: relative;
+}
+
+/* If opened in new tab, use 90vh */
+body.fullscreen #gameContainer {
+    height: 90vh;
+}
+
+/* Game panel - left side */
+#gamePanel {
+    flex: 1;
+    position: relative;
+    background: linear-gradient(to bottom, #e0f7fa 0%, #b2ebf2 100%);
+    overflow: hidden;
+    min-width: 0;
+}
+
+/* Canvas styling */
+#gameCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+/* Game overlay for controls */
+#gameOverlay {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none;
+    z-index: 10;
+}
+
+#gameOverlay > * {
+    pointer-events: auto;
+}
+
+#levelInfo, #scoreDisplay {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Button styles */
+.game-btn {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    min-height: 44px;
+}
+
+.game-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+}
+
+.game-btn:active {
+    transform: translateY(0);
+}
+
+#startBtn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    padding: 16px 32px;
+}
+
+/* Game over and level complete screens */
+#gameOverScreen, #levelCompleteScreen, #allCompleteScreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.message-box {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+}
+
+.message-box.success {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+}
+
+.message-box h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+#completeSentence {
+    font-size: 24px;
+    font-weight: bold;
+    color: #d63031;
+    margin: 15px 0;
+}
+
+#completePinyin {
+    font-size: 18px;
+    color: #0984e3;
+    margin: 10px 0;
+}
+
+#completeTranslation {
+    font-size: 16px;
+    color: #2d3436;
+    margin: 10px 0;
+    font-style: italic;
+}
+
+.icon-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 15px 5px;
+    box-shadow: 0 3px 10px rgba(76, 175, 80, 0.4);
+    transition: all 0.3s ease;
+    min-height: 44px;
+    min-width: 44px;
+}
+
+.icon-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.6);
+}
+
+/* NEW: Styles for all complete screen with review section */
+.all-complete-box {
+    max-width: 800px;
+    max-height: 85vh;
+}
+
+#totalScoreDisplay {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ff6b6b;
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#encouragementMessage {
+    font-size: 20px;
+    color: #2d3436;
+    margin: 15px 0 25px 0;
+    font-weight: bold;
+}
+
+#reviewSection {
+    margin: 25px 0;
+    text-align: left;
+}
+
+#reviewSection h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 3px solid #ff6b6b;
+    padding-bottom: 10px;
+}
+
+#reviewList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* NEW: Review item styling */
+.review-item {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    border-left: 5px solid #4CAF50;
+    transition: transform 0.2s ease;
+}
+
+.review-item:hover {
+    transform: translateX(5px);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-level {
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+    background: #e8f5e9;
+    padding: 5px 12px;
+    border-radius: 15px;
+}
+
+.review-audio-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+    transition: all 0.2s ease;
+    min-height: 36px;
+    min-width: 36px;
+}
+
+.review-audio-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.5);
+}
+
+.review-sentence {
+    font-size: 20px;
+    font-weight: bold;
+    color: #d63031;
+    margin: 8px 0;
+}
+
+.review-pinyin {
+    font-size: 16px;
+    color: #0984e3;
+    margin: 6px 0;
+}
+
+.review-translation {
+    font-size: 14px;
+    color: #636e72;
+    font-style: italic;
+    margin: 6px 0;
+}
+
+/* Hint panel - right side */
+#hintPanel {
+    width: 280px;
+    background: #fff9e6;
+    border-left: 3px solid #ffd700;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.hint-toggle-btn {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    color: #333;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+    white-space: nowrap;
+    min-height: 44px;
+}
+
+.hint-toggle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+}
+
+#hintContent {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.hint-section {
+    margin-bottom: 20px;
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.hint-section h3 {
+    color: #ff6b6b;
+    font-size: 16px;
+    margin-bottom: 8px;
+    border-bottom: 2px solid #ff6b6b;
+    padding-bottom: 5px;
+}
+
+.hint-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.vocab-item {
+    background: #f0f8ff;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border-left: 4px solid #4CAF50;
+}
+
+.vocab-word {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d63031;
+    margin-bottom: 5px;
+}
+
+.vocab-pinyin {
+    font-size: 14px;
+    color: #0984e3;
+    margin-bottom: 3px;
+}
+
+.vocab-translation {
+    font-size: 13px;
+    color: #636e72;
+    font-style: italic;
+}
+
+/* Tooltip */
+#tooltip {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 1000;
+    pointer-events: none;
+    max-width: 300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Hidden class */
+.hidden {
+    display: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #hintPanel {
+        width: 200px;
+        padding: 10px;
+    }
+    
+    .hint-toggle-btn {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+    
+    .hint-section h3 {
+        font-size: 14px;
+    }
+    
+    .hint-text {
+        font-size: 12px;
+    }
+    
+    .review-sentence {
+        font-size: 18px;
+    }
+    
+    .review-pinyin {
+        font-size: 14px;
+    }
+    
+    .review-translation {
+        font-size: 12px;
+    }
+}
+
+/* Scrollbar styling */
+#hintPanel::-webkit-scrollbar,
+#hintContent::-webkit-scrollbar,
+.message-box::-webkit-scrollbar {
+    width: 8px;
+}
+
+#hintPanel::-webkit-scrollbar-track,
+#hintContent::-webkit-scrollbar-track,
+.message-box::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+#hintPanel::-webkit-scrollbar-thumb,
+#hintContent::-webkit-scrollbar-thumb,
+.message-box::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+#hintPanel::-webkit-scrollbar-thumb:hover,
+#hintContent::-webkit-scrollbar-thumb:hover,
+.message-box::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

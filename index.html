@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>华文打字游戏 - 贪吃蛇学习版</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Main container for the game -->
+    <div id="gameContainer">
+        <!-- Left panel: Game area -->
+        <div id="gamePanel">
+            <!-- Canvas for snake game -->
+            <canvas id="gameCanvas"></canvas>
+            
+            <!-- Game controls overlay -->
+            <div id="gameOverlay">
+                <div id="levelInfo">第 <span id="currentLevel">1</span> 关</div>
+                <div id="scoreDisplay">得分: <span id="score">0</span></div>
+                <button id="startBtn" class="game-btn">开始游戏</button>
+            </div>
+            
+            <!-- Game over screen -->
+            <div id="gameOverScreen" class="hidden">
+                <div class="message-box">
+                    <h2>游戏结束，再试一次！</h2>
+                    <button id="retryBtn" class="game-btn">重新开始</button>
+                </div>
+            </div>
+            
+            <!-- Level complete screen -->
+            <div id="levelCompleteScreen" class="hidden">
+                <div class="message-box success">
+                    <h2>你真厉害！</h2>
+                    <div id="completeSentence"></div>
+                    <div id="completePinyin"></div>
+                    <div id="completeTranslation"></div>
+                    <button id="audioBtn" class="icon-btn" title="听朗读">🔊</button>
+                    <button id="nextLevelBtn" class="game-btn">进入下一关</button>
+                </div>
+            </div>
+            
+            <!-- MODIFIED: Enhanced all levels complete screen with total score, encouragement, and review section -->
+            <div id="allCompleteScreen" class="hidden">
+                <div class="message-box success all-complete-box">
+                    <h2>🎉 恭喜你完成所有关卡！</h2>
+                    <div id="totalScoreDisplay">总分: <span id="totalScore">0</span></div>
+                    <p id="encouragementMessage">你真是太棒了！继续加油！</p>
+                    
+                    <!-- NEW: Review section with all sentences -->
+                    <div id="reviewSection">
+                        <h3>📚 复习时间</h3>
+                        <div id="reviewList"></div>
+                    </div>
+                    
+                    <button id="restartGameBtn" class="game-btn">重新开始游戏</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right panel: Hint and vocabulary -->
+        <div id="hintPanel">
+            <button id="hintBtn" class="hint-toggle-btn">💡 提示</button>
+            
+            <div id="hintContent" class="hidden">
+                <div class="hint-section">
+                    <h3>句子</h3>
+                    <div id="hintSentence" class="hint-text"></div>
+                    <button id="hintAudioBtn" class="icon-btn" title="听朗读">🔊</button>
+                </div>
+                
+                <div class="hint-section">
+                    <h3>拼音</h3>
+                    <div id="hintPinyin" class="hint-text"></div>
+                </div>
+                
+                <div class="hint-section">
+                    <h3>英文翻译</h3>
+                    <div id="hintTranslation" class="hint-text"></div>
+                </div>
+                
+                <div class="hint-section">
+                    <h3>词语列表</h3>
+                    <div id="vocabList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tooltip for displaying information -->
+    <div id="tooltip" class="hidden"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
